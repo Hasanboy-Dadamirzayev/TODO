@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qaydlar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="heading">Mening Qaydlarim</h2>
+
+        <form method="POST" class="note-form">
+            {% csrf_token %}
+            <input type="text" name="nom" class="input" placeholder="Sarlavha..." required>
+            <textarea name="batafsil" rows="3" class="textarea" placeholder="Qayd matni..." required></textarea>
+            <button type="submit" class="btn">Qaydni saqlash</button>
+        </form>
+
+        <hr>
+
+        <h4 class="subheading">Yozilgan qaydlar</h4>
+        {% for note in notes %}
+            <div class="note-card">
+                <h5>{{ note.nom }}</h5>
+                <p>{{ note.batafsil }}</p>
+                <p class="timestamp">Yaratilgan: {{ note.y_vaqt }}</p>
+                <button><a href="/{{ note.id }}/delete">O'chirish</a></button>
+            </div>
+        {% empty %}
+            <p>Hozircha qayd yo‘q.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
